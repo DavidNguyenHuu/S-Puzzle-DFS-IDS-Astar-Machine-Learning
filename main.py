@@ -73,6 +73,30 @@ def search_node(node, number):  # search the node by applying all the moves and 
             child_nodes.remove(node)
     return child_nodes  # return a list of child nodes which we will search next if we didn't reach the goal state
 
+def DFS(start, goal, search_path):  # in addition to the start node and the goal state we will pass the search path
+    nodes_list = [start]  # we will add the first state node to our nodes list
+    solution_path = []  # we will use this list to backtrack the solution path
+    search_path.append(start)   # we will add the node to the search path
+    while len(nodes_list) != 0:  # quit if we don't have any nodes left to search
+        start_timer = time.time()  # we will start the timer
+        if start_timer == start_timer + 60:  # quit when timeout
+            return "no solution"
+        else:
+            if start.state == goal:  # we will check if the start node contain the goal
+                solution_path.append(start)  # we will add the node that contain the goal state first
+                while start.parent is not None:  # when we reach the original start node we will stop
+                    solution_path.append(start.parent)  # we will add the parent node to the path
+                start = start.parent  # we will add the parent of the parent node
+                return solution_path, search_path  # we will return the solution path with the cost
+            else:
+                nodes_list.remove(start)    # we will remove the node that we just checked
+                for index in start.state:   # for each index in the state of the current node we will apply the search
+                    child_list = search_node(start, index)  # we will add the results to a new list
+                    for node in nodes_list:     # we will search each node in the child list 
+                        search_path.append(node)
+                        DFS(node.state, goal)
+
+
 
 
 
