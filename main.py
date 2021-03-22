@@ -99,5 +99,22 @@ def DFS(start, goal, search_path):  # in addition to the start node and the goal
 
 
 
+# This function performs depth limited search
+def DLS(start, goal, max_depth):  # we will pass start node, goal node and maximum depth
+    if start == goal:
+        return True
+
+    elif max_depth <= 0:  # if the maximum depth is reached then it stops searching.
+        return False
+
+
+# This function performs iterative-deepening Search
+def IDS(start, goal, search_path, max_depth):  # we will pass start node, goal node, search path and max depth
+    # it will loop through and does iterative deepening search till the maximum depth.
+    for limit in range(max_depth):
+        if DLS(start, goal, search_path, limit):
+            return True
+        else:
+            False
 
 
