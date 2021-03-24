@@ -18,10 +18,6 @@ class Node:
     def __lt__(self, other):
         return self.f < other.f
 
-    # Print node
-    def __repr__(self):
-        return '({0},{1})'.format(self.state, self.f)
-
 
 # A* search
 def astar_search(start, goal):
@@ -65,13 +61,18 @@ def astar_search(start, goal):
             if neighbor in closed:
                 continue
             # Generate heuristics
-            count = 0
+            countg = 0
+            for row in range(len(next)):
+                for col in range(len(next[row])):
+                    if next[row][col] == start[row][col]:
+                        countg += 1;
+            counth = 0
             for row in range(len(next)):
                 for col in range(len(next[row])):
                     if next[row][col] == goal[row][col]:
-                        count += 1;
-            neighbor.g = 0
-            neighbor.h = count
+                        counth += 1;
+            neighbor.g = countg
+            neighbor.h = counth
             neighbor.f = neighbor.g + neighbor.h
             # Check if neighbor is in open list and if it has a lower f value
             if add_to_open(open, neighbor):
@@ -131,7 +132,7 @@ def main():
     goal = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     size = 3
 
-    # Create puzzle WIP
+    # Create puzzle
     start = [[6, 1, 2], [7, 8, 3], [5, 4, 9]]
 
     # Find the closest path from start to goal
