@@ -20,7 +20,8 @@ class Node:
 
     # Print node
     def __repr__(self):
-        return ('({0},{1})'.format(self.state, self.f))
+        return '({0},{1})'.format(self.state, self.f)
+
 
 # A* search
 def astar_search(start, goal):
@@ -50,7 +51,8 @@ def astar_search(start, goal):
                 current_node = current_node.parent
             # path.append(start)
             # Return reversed path
-            return path[::-1]
+            # return path[::-1]
+            return 'done'
 
         # Get neighbors
         neighbors = get_neighbors(current_node.state)
@@ -60,28 +62,65 @@ def astar_search(start, goal):
             # Create a neighbor node
             neighbor = Node(next, current_node)
             # Check if the neighbor is in the closed list
-            if (neighbor in closed):
+            if neighbor in closed:
                 continue
             # Generate heuristics
+            count = 0
+            for row in range(len(next)):
+                for col in range(len(next[row])):
+                    if next[row][col] == goal[row][col]:
+                        count += 1;
             neighbor.g = 0
-            neighbor.h = 0
+            neighbor.h = count
             neighbor.f = neighbor.g + neighbor.h
             # Check if neighbor is in open list and if it has a lower f value
-            if (add_to_open(open, neighbor) == True):
+            if add_to_open(open, neighbor):
                 # Everything is green, add neighbor to open list
                 open.append(neighbor)
     # Return None, no path is found
     return None
 
+
 # Get all next possible steps
-def get_neighbors(current):
+def get_neighbors(current_state):
     neighbors = []
+    for row in range(len(current_state)):
+        for col in range(len(current_state[row])):
+            # switch up
+            if row != 0:
+                temp_state = current_state
+                temp_state[row][col] = current_state[row - 1][col]
+                temp_state[row - 1][col] = current_state[row][col]
+                if temp_state not in neighbors:
+                    neighbors.append(temp_state)
+            # switch down
+            if row != len(current_state) - 1:
+                temp_state = current_state
+                temp_state[row][col] = current_state[row + 1][col]
+                temp_state[row + 1][col] = current_state[row][col]
+                if temp_state not in neighbors:
+                    neighbors.append(temp_state)
+            # switch left
+            if col != 0:
+                temp_state = current_state
+                temp_state[row][col] = current_state[row][col - 1]
+                temp_state[row][col - 1] = current_state[row][col]
+                if temp_state not in neighbors:
+                    neighbors.append(temp_state)
+            # switch right
+            if col != len(current_state) - 1:
+                temp_state = current_state
+                temp_state[row][col] = current_state[row][col + 1]
+                temp_state[row][col + 1] = current_state[row][col]
+                if temp_state not in neighbors:
+                    neighbors.append(temp_state)
     return neighbors
+
 
 # Check if a neighbor should be added to open list
 def add_to_open(open, neighbor):
     for node in open:
-        if (neighbor == node and neighbor.f >= node.f):
+        if neighbor == node and neighbor.f >= node.f:
             return False
     return True
 
@@ -99,8 +138,6 @@ def main():
     path = astar_search(start, goal)
     print()
     print(path)
-    print()
-    print('Steps to goal: {0}'.format(len(path)))
-    print()
+
 
 if __name__ == "__main__": main()
