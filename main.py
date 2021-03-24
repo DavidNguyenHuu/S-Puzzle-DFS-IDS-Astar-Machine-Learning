@@ -2,7 +2,7 @@ import time
 from typing import Tuple
 
 class Node:
-    def __int__(self, state, parent, operation, depth, cost):
+    def __init__(self, state, parent, operation, depth, cost):
         self.state = state  # should consist of a list or tuple to represent the state we are currently in
         self.parent = parent  # the other parameters are to keep find the path and the depth and the cost
         self.operation = operation
