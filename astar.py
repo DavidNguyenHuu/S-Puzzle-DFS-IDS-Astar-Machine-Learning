@@ -1,6 +1,9 @@
 # https://www.annytab.com/a-star-search-algorithm-in-python/
 
 # This class represents a node
+import copy
+
+
 class Node:
     # Initialize the class
     def __init__(self, position: (), parent: ()):
@@ -61,17 +64,19 @@ def astar_search(start, goal):
             if neighbor in closed:
                 continue
             # Generate heuristics
+            """
             countg = 0
             for row in range(len(next)):
                 for col in range(len(next[row])):
                     if next[row][col] == start[row][col]:
                         countg += 1;
+            """
             counth = 0
             for row in range(len(next)):
                 for col in range(len(next[row])):
-                    if next[row][col] == goal[row][col]:
+                    if next[row][col] != goal[row][col]:
                         counth += 1;
-            neighbor.g = countg
+            neighbor.g = 0
             neighbor.h = counth
             neighbor.f = neighbor.g + neighbor.h
             # Check if neighbor is in open list and if it has a lower f value
@@ -89,28 +94,28 @@ def get_neighbors(current_state):
         for col in range(len(current_state[row])):
             # switch up
             if row != 0:
-                temp_state = current_state
+                temp_state = copy.deepcopy(current_state)
                 temp_state[row][col] = current_state[row - 1][col]
                 temp_state[row - 1][col] = current_state[row][col]
                 if temp_state not in neighbors:
                     neighbors.append(temp_state)
             # switch down
             if row != len(current_state) - 1:
-                temp_state = current_state
+                temp_state = copy.deepcopy(current_state)
                 temp_state[row][col] = current_state[row + 1][col]
                 temp_state[row + 1][col] = current_state[row][col]
                 if temp_state not in neighbors:
                     neighbors.append(temp_state)
             # switch left
             if col != 0:
-                temp_state = current_state
+                temp_state = copy.deepcopy(current_state)
                 temp_state[row][col] = current_state[row][col - 1]
                 temp_state[row][col - 1] = current_state[row][col]
                 if temp_state not in neighbors:
                     neighbors.append(temp_state)
             # switch right
             if col != len(current_state) - 1:
-                temp_state = current_state
+                temp_state = copy.deepcopy(current_state)
                 temp_state[row][col] = current_state[row][col + 1]
                 temp_state[row][col + 1] = current_state[row][col]
                 if temp_state not in neighbors:
