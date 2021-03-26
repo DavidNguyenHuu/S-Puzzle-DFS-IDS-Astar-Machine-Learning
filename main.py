@@ -77,7 +77,8 @@ def DFS(start, goal):
     nodes_list.append(start)
     solution_path = []  # we will use this list to backtrack the solution path
     while len(nodes_list) != 0:  # quit if we don't have any nodes left to search
-        if start_timer > start_timer + 60:  # quit when timeout
+        end_time = time.time()
+        if end_time >= start_timer + 60:  # quit when timeout
             print("no solution")
         else:
             test_node = nodes_list.pop(0)  # we will remove the node that we just checked
