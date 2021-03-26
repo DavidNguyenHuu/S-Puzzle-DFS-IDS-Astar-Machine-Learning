@@ -1,36 +1,27 @@
 # https://www.annytab.com/a-star-search-algorithm-in-python/
-
-# This class represents a node
 import copy
 
 
 class Node:
-    # Initialize the class
-    def __init__(self, position: (), parent: ()):
-        self.state = position
+    def __init__(self, state: (), parent: ()):
+        self.state = state
         self.parent = parent
-        self.g = 0  # Distance to start node
-        self.h = 0  # Distance to goal node
-        self.f = 0  # Total cost
-
-    # Compare nodes
-    def __eq__(self, other):
-        return self.state == other.state
+        self.g = 0
+        self.h = 0
+        self.f = 0
 
     # Sort nodes
     def __lt__(self, other):
         return self.f < other.f
 
 
-# A* search
 def astar_search(start, goal):
-    # Create lists for open nodes and closed nodes
     open = []
     closed = []
     # Create a start node and an goal node
     start_node = Node(start, None)
     goal_node = Node(goal, None)
-    # Add the start node
+
     open.append(start_node)
 
     # Loop until the open list is empty
@@ -41,11 +32,12 @@ def astar_search(start, goal):
         current_node = open.pop(0)
         # Add the current node to the closed list
         closed.append(current_node)
-
+        print(current_node.g)
+        print(current_node.f)
         # Check if we have reached the goal, return the path
-        if current_node == goal_node:
+        if current_node.state == goal_node.state:
             path = []
-            while current_node != start_node:
+            while current_node.state != start_node.state:
                 path.append(current_node.state)
                 current_node = current_node.parent
             # path.append(start)
@@ -63,25 +55,17 @@ def astar_search(start, goal):
             # Check if the neighbor is in the closed list
             if neighbor in closed:
                 continue
-            # Generate heuristics
-            """
-            countg = 0
-            for row in range(len(next)):
-                for col in range(len(next[row])):
-                    if next[row][col] == start[row][col]:
-                        countg += 1;
-            """
+            # Generate heuristics, g = num of steps from start, h = num of tiles not in goal state
             counth = 0
             for row in range(len(next)):
                 for col in range(len(next[row])):
                     if next[row][col] != goal[row][col]:
                         counth += 1;
-            neighbor.g = 0
+            neighbor.g = current_node.g + 1
             neighbor.h = counth
             neighbor.f = neighbor.g + neighbor.h
             # Check if neighbor is in open list and if it has a lower f value
             if add_to_open(open, neighbor):
-                # Everything is green, add neighbor to open list
                 open.append(neighbor)
     # Return None, no path is found
     return None
@@ -126,7 +110,7 @@ def get_neighbors(current_state):
 # Check if a neighbor should be added to open list
 def add_to_open(open, neighbor):
     for node in open:
-        if neighbor == node and neighbor.f >= node.f:
+        if neighbor.state == node.state and neighbor.f >= node.f:
             return False
     return True
 
