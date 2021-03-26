@@ -59,41 +59,45 @@ def move_right(state, row, column):
         return None
 
 
-def search_node(Node, rwo, column):  # search the node by applying all the moves and add the child states to a list
-    child_nodes = [create_node(move_right(Node.state, rwo, column), Node, Node.depth + 1, 0),
-                   create_node(move_down(Node.state, rwo, column), Node, Node.depth + 1, 0),
-                   create_node(move_up(Node.state, rwo, column), Node, Node.depth + 1, 0),
-                   create_node(move_left(Node.state, rwo, column), Node, Node.depth + 1, 0)]
+def search_node(Node, row, column):  # search the node by applying all the moves and add the child states to a list
+    child_nodes = [create_node(move_right(Node.state, row, column), Node, Node.depth + 1, 0),
+                   create_node(move_down(Node.state, row, column), Node, Node.depth + 1, 0),
+                   create_node(move_up(Node.state, row, column), Node, Node.depth + 1, 0),
+                   create_node(move_left(Node.state, row, column), Node, Node.depth + 1, 0)]
     for Node in child_nodes:
         if Node.state is None:  # filtering nodes that have wrong states
             child_nodes.remove(Node)
     return child_nodes  # return a list of child nodes which we will search next if we didn't reach the goal state
 
 
-def DFS(start, goal, search, start_timer):
+def DFS(start, goal):
     nodes_list = []  # we will add the first state node to our nodes list
+    search = []
+    start_timer = time.time()
     nodes_list.append(start)
     solution_path = []  # we will use this list to backtrack the solution path
-    search.append(start.state)  # we will add the node to the search path
     while len(nodes_list) != 0:  # quit if we don't have any nodes left to search
-        if start_timer == start_timer + 60:  # quit when timeout
-            return "no solution"
+        if start_timer > start_timer + 60:  # quit when timeout
+            print("no solution")
         else:
-            if start.state == goal:  # we will check if the start node contain the goal
-                solution_path.append(start.state)  # we will add the node that contain the goal state first
-                while start.parent is not None:  # when we reach the original start node we will stop
-                    solution_path.append(start.parent.state)  # we will add the parent node to the path
-                start = start.parent  # we will add the parent of the parent node
+            test_node = nodes_list.pop(0)  # we will remove the node that we just checked
+            search.append(test_node.state)  # we will add the node to the search path
+            if test_node.state == goal:  # we will check if the start node contain the goal
+                solution_path.append(test_node.state)  # we will add the node that contain the goal state first
+                while test_node.parent is not None:  # when we reach the original start node we will stop
+                    solution_path.append(test_node.parent.state)  # we will add the parent node to the path
+                    test_node = test_node.parent  # we will add the parent of the parent node
                 print("the solution path for DFS :", solution_path)
+                print("the search path for DFS :", search)
                 return search  # we will return the solution path with the search path
             else:
-                nodes_list.remove(start)  # we will remove the node that we just checked
-                for i in range(len(start.state)):
-                    for j in range(len(start.state[i])):
-                        child_list = search_node(start, i, j)  # we will add the results to a new list
-                    for node in nodes_list:  # we will search each node in the child list
-                        search.append(node)
-                        DFS(node, goal, search, start_timer)
+                if test_node.state is not None:
+                    for i in range(len(test_node.state)):
+                        for j in range(len(test_node.state[i])):
+                            child_list = search_node(test_node, i, j)  # we will add the results to a new list
+                            for node in child_list:
+                                if node.state not in search:
+                                    nodes_list.append(node)
 
 
 
@@ -118,13 +122,13 @@ def IDS(start, goal, search_path, max_depth):  # we will pass start node, goal n
 def main():
     goal_state = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     initial_state = ((6, 1, 2), (7, 8, 3), (5, 4, 9))
+    initial_state2 = ((2, 1, 3), (4, 5, 6), (7, 8, 9))
     goal_state_list = [list(i) for i in goal_state]
     initial_state_list = [list(i) for i in initial_state]
-    start = create_node(initial_state_list, None, 0, 0)
-    timer = time.time()
-    search = []
-    search = DFS(start, goal_state_list, search, timer)
-    print("the search path for DFS :", search)
+    initial_state_list2 = [list(i) for i in initial_state2]
+    start = create_node(initial_state_list2, None, 0, 0)
+    DFS(start, goal_state_list)
+
 
 
 if __name__ == '__main__':
