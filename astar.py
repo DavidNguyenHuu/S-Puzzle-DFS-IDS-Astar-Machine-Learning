@@ -191,8 +191,8 @@ def IDS(start, goal,maxdepth):
                     solution_path.append(test_node.state)
                     test_node = test_node.parent
                 solution_path.append(start.state)
-                print(" the solution path for the DFS is:", solution_path[::-1])
-                print("the search path for the DFS is :", search)
+                print(" the solution path for the IDS is:", solution_path[::-1])
+                print("the search path for the IDS is :", search)
             neighbors = get_neighbors(test_node.state)
             for state in neighbors:
                 #  print("the neighbor state :",state)
@@ -202,7 +202,7 @@ def IDS(start, goal,maxdepth):
                 neighbor.g = test_node.g + 1
                 if add_to_open(open_list, neighbor):
                     open_list.append(neighbor)
-        print("no solution was found using DFS")
+        print("no solution was found using IDS")
 
 def main():
     goal_state = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
