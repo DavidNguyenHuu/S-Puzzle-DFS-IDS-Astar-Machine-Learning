@@ -18,6 +18,7 @@ class Node:
 def astar_search(start, goal):
     open = []
     closed = []
+    search = []
     # Create a start node and an goal node
     start_node = Node(start, None)
     goal_node = Node(goal, None)
@@ -32,18 +33,19 @@ def astar_search(start, goal):
         current_node = open.pop(0)
         # Add the current node to the closed list
         closed.append(current_node)
-        print(current_node.g)
-        print(current_node.f)
+        search.append(current_node.state)
+        # print(current_node.g)
+        # print(current_node.f)
         # Check if we have reached the goal, return the path
         if current_node.state == goal_node.state:
             path = []
             while current_node.state != start_node.state:
                 path.append(current_node.state)
                 current_node = current_node.parent
-            # path.append(start)
-            # Return reversed path
-            # return path[::-1]
-            return 'done'
+            path.append(start)
+            print("Solution path for A*: ", path[::-1])
+            print("Search path for A*: ", search)
+            return path[::-1]
 
         # Get neighbors
         neighbors = get_neighbors(current_node.state)
@@ -114,20 +116,10 @@ def add_to_open(open, neighbor):
             return False
     return True
 
-
-# The main entry point for this module
 def main():
-    start = None
     goal = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    size = 3
-
-    # Create puzzle
     start = [[6, 1, 2], [7, 8, 3], [5, 4, 9]]
-
-    # Find the closest path from start to goal
-    path = astar_search(start, goal)
-    print()
-    print(path)
+    astar_search(start, goal)
 
 
 if __name__ == "__main__": main()
