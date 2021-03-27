@@ -212,7 +212,7 @@ def main():
     initial_state_list = [list(i) for i in initial_state]
     initial_state_list2 = [list(i) for i in initial_state2]
     start = Node(initial_state_list2, None)
-    s = dfs(start,goal_state_list)
+   
 
 if __name__ == '__main__':
     main()
