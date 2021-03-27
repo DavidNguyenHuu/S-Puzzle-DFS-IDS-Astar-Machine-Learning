@@ -1,6 +1,3 @@
-from numpy import random
-
-
 class Node:
     def __init__(self, state, parent):
         self.state = state

@@ -136,7 +136,7 @@ def main():
     # initial_state = ((6, 1, 2), (7, 8, 3), (5, 4, 9))
     # same solution path, inadmissible smaller search path
     # initial_state = ((5, 4, 9), (6, 1, 2), (7, 8, 3))
-    # admissible lowesr cost solution path, inadmissible smaller search path
+    # admissible lower cost solution path, inadmissible smaller search path
 
     # true => use admissible heuristic, if false => use inadmissible heuristic
     a_star_search(initial_state, goal_state, True)
