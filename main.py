@@ -1,6 +1,8 @@
 import time
 from typing import Tuple
 
+from astar import a_star_search
+
 
 class Node:
     def __init__(self, state, parent, depth, cost):
@@ -101,7 +103,6 @@ def DFS(start, goal):
                                     nodes_list.append(node)
 
 
-
 # This function performs depth limited search
 def DLS(start, goal, max_depth):  # we will pass start node, goal node and maximum depth
     if start == goal:
@@ -119,7 +120,8 @@ def IDS(start, goal, search_path, max_depth):  # we will pass start node, goal n
             return True
         else:
             False
-            
+
+
 def main():
     goal_state = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     initial_state = ((6, 1, 2), (7, 8, 3), (5, 4, 9))
@@ -129,9 +131,7 @@ def main():
     initial_state_list2 = [list(i) for i in initial_state2]
     start = create_node(initial_state_list2, None, 0, 0)
     DFS(start, goal_state_list)
-
-
+    a_star_search(initial_state, goal_state)
 
 if __name__ == '__main__':
     main()
-            
