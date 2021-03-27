@@ -141,3 +141,46 @@ def add_to_open(open_list, neighbor):
         if neighbor.state == node.state and neighbor.f >= node.f:
             return False
     return True
+
+def dfs(start, goal):
+    open_list = []
+    closed_list = []
+    search = []
+    open_list.append(start)
+    timer = time.time()+60
+    while len(open_list) > 0:
+        if time.time() == timer:
+            print("no solution, time out")
+        test_node = open_list.pop(0)
+       # print("the test state :", test_node.state)
+        search.append(test_node.state)
+        if test_node.state == goal:
+            solution_path = []
+            while test_node.state != start.state:
+                solution_path.append(test_node.state)
+                test_node = test_node.parent
+            solution_path.append(start.state)
+            print(" the solution path for the DFS is:", solution_path[::-1])
+            print("the search path for the DFS is :", search)
+        neighbors = get_neighbors(test_node.state)
+        for state in neighbors:
+          #  print("the neighbor state :",state)
+            neighbor = Node(state,test_node)
+            if neighbor in search:
+                continue
+            if add_to_open(open_list,neighbor):
+                open_list.append(neighbor)
+    print("no solution was found using DFS")
+
+def main():
+    goal_state = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
+    initial_state = ((6, 1, 2), (7, 8, 3), (5, 4, 9))
+    initial_state2 = ((1, 2, 3), (4, 5, 6), (7, 9, 8))
+    goal_state_list = [list(i) for i in goal_state]
+    initial_state_list = [list(i) for i in initial_state]
+    initial_state_list2 = [list(i) for i in initial_state2]
+    start = Node(initial_state_list2, None)
+    s = dfs(start,goal_state_list)
+
+if __name__ == '__main__':
+    main()
