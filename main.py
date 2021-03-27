@@ -103,25 +103,34 @@ def DFS(start, goal):
                                     nodes_list.append(node)
 
 
-# This function performs depth limited search
-def DLS(start, goal, max_depth):  # we will pass start node, goal node and maximum depth
-    if start == goal:
-        return True
-
-    elif max_depth <= 0:  # if the maximum depth is reached then it stops searching.
-        return False
-
-
 # This function performs iterative-deepening Search
-def IDS(start, goal, search_path, max_depth):  # we will pass start node, goal node, search path and max depth
+def IDS(start, goal, max_depth):  # we will pass start node, goal node, search path and max depth
     # it will loop through and does iterative deepening search till the maximum depth.
-    for limit in range(max_depth):
-        if DLS(start, goal, search_path, limit):
-            return True
+    for depth_limit in range(max_depth):
+        result= DLS(start, goal, depth_limit)
+        if result == goal:
+            return result
         else:
-            False
+            depth_limit += 1
+            
+ # This function performs depth limited search
+def DLS(start, goal, max_depth):  # we will pass start node, goal node and maximum depth
+    open_list = []
+    search = []
+    solution_path = []
+    depth_limit = max_depth
+    open_list.append(start)
 
+    while len(open_list) != 0:
+        test_node = open_list.pop(0)
+        new_node = search.append(test_node.state)
+        if new_node == goal:
+            return solution_path.append(new_node.state)
+        else:
+            if max_depth < depth_limit:
+                new_node.append(open_list.state)           
 
+                
 def main():
     goal_state = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     initial_state = ((6, 1, 2), (7, 8, 3), (5, 4, 9))
