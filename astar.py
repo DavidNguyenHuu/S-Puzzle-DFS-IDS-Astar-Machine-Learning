@@ -1,3 +1,6 @@
+from numpy import random
+
+
 class Node:
     def __init__(self, state, parent):
         self.state = state
@@ -11,7 +14,8 @@ class Node:
         return self.f < other.f
 
 
-def a_star_search(start, goal):
+# If is_admissible is true => use admissible heuristic, if false => use inadmissible heuristic
+def a_star_search(start, goal, is_admissible):
     open_list = []
     closed_list = []
     search = []  # Search path
@@ -35,8 +39,12 @@ def a_star_search(start, goal):
                 path.append(current_node.state)
                 current_node = current_node.parent
             path.append(start)
-            print("Solution path for A* (admissible): ", path[::-1])
-            print("Search path for A* (admissible): ", search)
+            if is_admissible:
+                print("Solution path for A* (admissible): ", path[::-1])
+                print("Search path for A* (admissible): ", search)
+            else:
+                print("Solution path for A* (inadmissible): ", path[::-1])
+                print("Search path for A* (inadmissible): ", search)
             return path[::-1]
         # Get neighbors of current node
         neighbors = get_neighbors(current_node.state)
@@ -45,14 +53,9 @@ def a_star_search(start, goal):
             neighbor = Node(state, current_node)
             if neighbor in closed_list:
                 continue
-            # Generate heuristics, g = num of steps from start, h = num of tiles not in goal state
-            count_h = 0
-            for row in range(len(state)):
-                for col in range(len(state[row])):
-                    if state[row][col] != goal[row][col]:
-                        count_h += 1
+            # Calculate f(n), g = num of steps from start, h = num of tiles not in goal state
             neighbor.g = current_node.g + 1
-            neighbor.h = count_h
+            neighbor.h = get_h(state, goal, is_admissible)
             neighbor.f = neighbor.g + neighbor.h
             # Check if neighbor is in open list and if it has a lower f value
             if add_to_open(open_list, neighbor):
@@ -61,6 +64,22 @@ def a_star_search(start, goal):
     print("Solution path for A*: no solution")
     print("Search path for A*: no solution")
     return None
+
+
+# If is_admissible is true => use admissible heuristic, if false => use inadmissible heuristic
+def get_h(state, goal, is_admissible):
+    count_h = 0
+    if is_admissible:
+        for row in range(len(state)):
+            for col in range(len(state[row])):
+                if state[row][col] != goal[row][col]:
+                    count_h += 1
+    else:
+        for row in range(len(state)):
+            for col in range(len(state[row])):
+                if state[row][col] != goal[row][col]:
+                    count_h += 2
+    return count_h
 
 
 # Get all next possible steps, convert tuple to list to switch values

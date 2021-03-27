@@ -131,7 +131,17 @@ def main():
     initial_state_list2 = [list(i) for i in initial_state2]
     start = create_node(initial_state_list2, None, 0, 0)
     DFS(start, goal_state_list)
-    a_star_search(initial_state, goal_state)
+
+    # A* Tests, will remove
+    # initial_state = ((6, 1, 2), (7, 8, 3), (5, 4, 9))
+    # same solution path, inadmissible smaller search path
+    # initial_state = ((5, 4, 9), (6, 1, 2), (7, 8, 3))
+    # admissible lowesr cost solution path, inadmissible smaller search path
+
+    # true => use admissible heuristic, if false => use inadmissible heuristic
+    a_star_search(initial_state, goal_state, True)
+    a_star_search(initial_state, goal_state, False)
+
 
 if __name__ == '__main__':
     main()
