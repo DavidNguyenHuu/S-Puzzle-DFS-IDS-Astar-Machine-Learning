@@ -171,6 +171,38 @@ def dfs(start, goal):
             if add_to_open(open_list,neighbor):
                 open_list.append(neighbor)
     print("no solution was found using DFS")
+   
+def IDS(start, goal,maxdepth):
+        open_list = []
+        closed_list = []
+        search = []
+        open_list.append(start)
+        test_node = start
+        timer = time.time() + 60
+        while test_node.g <= maxdepth:
+            if time.time() == timer:
+                print("no solution, time out")
+            test_node = open_list.pop(0)
+            # print("the test state :", test_node.state)
+            search.append(test_node.state)
+            if test_node.state == goal:
+                solution_path = []
+                while test_node.state != start.state:
+                    solution_path.append(test_node.state)
+                    test_node = test_node.parent
+                solution_path.append(start.state)
+                print(" the solution path for the DFS is:", solution_path[::-1])
+                print("the search path for the DFS is :", search)
+            neighbors = get_neighbors(test_node.state)
+            for state in neighbors:
+                #  print("the neighbor state :",state)
+                neighbor = Node(state, test_node)
+                if neighbor in search:
+                    continue
+                neighbor.g = test_node.g + 1
+                if add_to_open(open_list, neighbor):
+                    open_list.append(neighbor)
+        print("no solution was found using DFS")
 
 def main():
     goal_state = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
