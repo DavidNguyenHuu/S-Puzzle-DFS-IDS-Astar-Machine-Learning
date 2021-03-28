@@ -1,3 +1,4 @@
+from time import perf_counter
 
 class Node:
     def __init__(self, state, parent):
@@ -148,10 +149,13 @@ def dfs(start, goal):
     closed_list = []
     search = []
     open_list.append(start)
-    timer = time.time()+60
+    #timer = time.time()+60
+    start_timer = perf_counter()#start timer
     while len(open_list) > 0:
-      if time.time() == timer:
-         print("no solution, time out")
+      end_timer = perf_counter() #stop timer
+        if end_timer-start_timer >= 60:
+            print("no solution, time out")
+            break
       test_node = open_list.pop(0)
        # print("the test state :", test_node.state)
         search.append(test_node.state)
