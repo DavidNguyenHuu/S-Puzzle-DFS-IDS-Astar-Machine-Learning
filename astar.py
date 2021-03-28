@@ -1,3 +1,4 @@
+import time
 class Node:
     def __init__(self, state, parent):
         self.state = state
@@ -148,9 +149,9 @@ def dfs(start, goal):
     search = []
     open_list.append(start)
     timer = time.time()+60
-    while len(open_list) > 0:
-        if time.time() == timer:
-            print("no solution, time out")
+    while len(open_list) > 0 and time.time() < timer:
+        print("no solution, time out")
+        break
         test_node = open_list.pop(0)
        # print("the test state :", test_node.state)
         search.append(test_node.state)
