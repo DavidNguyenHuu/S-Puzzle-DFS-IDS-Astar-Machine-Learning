@@ -203,6 +203,15 @@ def IDS(start, goal,maxdepth):
                 if add_to_open(open_list, neighbor):
                     open_list.append(neighbor)
         print("no solution was found using IDS")
+        
+def read_puzzles():
+   with open('puzzle_set.txt', 'r') as data:
+        puzzles=[]
+        for line in data:
+            line = line.strip()
+            tuple_list = list(eval(line))
+            puzzles.append(tuple_list)
+    return puzzles
 
 def main():
     goal_state = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
