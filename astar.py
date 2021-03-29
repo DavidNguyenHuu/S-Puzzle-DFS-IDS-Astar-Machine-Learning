@@ -149,15 +149,10 @@ def dfs(start, goal):
     closed_list = []
     search = []
     open_list.append(start)
-    #timer = time.time()+60
-    start_timer = perf_counter()#start timer
-    while len(open_list) > 0:
-      end_timer = perf_counter() #stop timer
-        if end_timer-start_timer >= 60:
-            print("no solution, time out")
-            break
-      test_node = open_list.pop(0)
-       # print("the test state :", test_node.state)
+    timer = time.time() + 60
+    tuple_goal = tuple(goal)
+    while len(open_list) > 0 and time.time()<timer:
+        test_node = open_list.pop(0)
         search.append(test_node.state)
         if test_node.state == goal:
             solution_path = []
@@ -167,13 +162,13 @@ def dfs(start, goal):
             solution_path.append(start.state)
             print(" the solution path for the DFS is:", solution_path[::-1])
             print("the search path for the DFS is :", search)
+            break
         neighbors = get_neighbors(test_node.state)
         for state in neighbors:
-          #  print("the neighbor state :",state)
-            neighbor = Node(state,test_node)
+            neighbor = Node(state, test_node)
             if neighbor in search:
                 continue
-            if add_to_open(open_list,neighbor):
+            if add_to_open(open_list, neighbor):
                 open_list.append(neighbor)
     print("no solution was found using DFS")
    
@@ -212,11 +207,9 @@ def IDS(start, goal,maxdepth):
 def main():
     goal_state = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     initial_state = ((6, 1, 2), (7, 8, 3), (5, 4, 9))
-    initial_state2 = ((1, 2, 3), (4, 5, 6), (7, 9, 8))
-    goal_state_list = [list(i) for i in goal_state]
-    initial_state_list = [list(i) for i in initial_state]
-    initial_state_list2 = [list(i) for i in initial_state2]
-    start = Node(initial_state_list2, None)
+    initial_state2 = ((2, 1, 3), (4, 5, 6), (7, 8, 9))
+    start = Node(initial_state, None)
+    dfs(start, goal_state)
    
 
 if __name__ == '__main__':
