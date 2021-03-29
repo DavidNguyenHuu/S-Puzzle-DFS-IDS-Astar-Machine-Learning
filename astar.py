@@ -1,4 +1,4 @@
-from time import perf_counter
+import time
 
 class Node:
     def __init__(self, state, parent):
