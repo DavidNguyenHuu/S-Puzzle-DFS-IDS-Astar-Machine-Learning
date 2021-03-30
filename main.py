@@ -197,14 +197,8 @@ def IDS(start, goal):
                 solution_path.append(test_node.state)
                 test_node = test_node.parent
             solution_path.append(start.state)
-            print("the solution path for the IDS is: ")
-            print(solution_path[::-1])
-            print("the length of the solution path is")
-            print(len(solution_path))
-            print("the search path for the IDS is : ")
-            print(search)
-            print("the length of the search path is")
-            print(len(search))
+            print("The solution path for the IDS is: ", solution_path[::-1])
+            print("The search path for the IDS is : ", search)
             break
         neighbors = get_neighbors(test_node.state)
         for state in neighbors:
@@ -213,8 +207,8 @@ def IDS(start, goal):
                 continue
             if add_to_open(open_list, neighbor):
                 open_list.append(neighbor)
-    print("the solution path for the IDS is: no results")
-    print("the search path for the IDS is : no results")
+    print("The solution path for the IDS is: no results")
+    print("The search path for the IDS is : no results")
 
 
 def read_puzzles():
