@@ -186,9 +186,9 @@ def IDS(start, goal, maxdepth):
     open_list.append(start)
     test_node = start
     timer = time.time() + 60
-    while test_node.g <= maxdepth:
-        if time.time() == timer:
-            print("no solution, time out")
+    while test_node.g <= maxdepth and time.time() < timer:
+#         if time.time() == timer:
+#             print("no solution, time out")
         test_node = open_list.pop(0)
         # print("the test state :", test_node.state)
         search.append(test_node.state)
