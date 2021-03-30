@@ -178,19 +178,18 @@ def dfs(start, goal):
                 open_list.append(neighbor)
     print("no solution was found using DFS")
 
-
-def IDS(start, goal, maxdepth):
+def IDS(start, goal):
     open_list = []
     closed_list = []
     search = []
     open_list.append(start)
     test_node = start
     timer = time.time() + 60
-    while test_node.g <= maxdepth and time.time() < timer:
-#         if time.time() == timer:
-#             print("no solution, time out")
+    max_depth=9
+    for j in range(max_depth):
+        j
+    while test_node.g <= j and time.time() < timer:
         test_node = open_list.pop(0)
-        # print("the test state :", test_node.state)
         search.append(test_node.state)
         if test_node.state == goal:
             solution_path = []
@@ -198,18 +197,24 @@ def IDS(start, goal, maxdepth):
                 solution_path.append(test_node.state)
                 test_node = test_node.parent
             solution_path.append(start.state)
-            print(" the solution path for the IDS is:", solution_path[::-1])
-            print("the search path for the IDS is :", search)
+            print("the solution path for the IDS is: ")
+            print(solution_path[::-1])
+            print("the length of the solution path is")
+            print(len(solution_path))
+            print("the search path for the IDS is : ")
+            print(search)
+            print("the length of the search path is")
+            print(len(search))
+            break
         neighbors = get_neighbors(test_node.state)
         for state in neighbors:
-            #  print("the neighbor state :",state)
             neighbor = Node(state, test_node)
             if neighbor in search:
                 continue
-            neighbor.g = test_node.g + 1
             if add_to_open(open_list, neighbor):
                 open_list.append(neighbor)
-    print("no solution was found using IDS")
+    print("the solution path for the IDS is: no results")
+    print("the search path for the IDS is : no results")
 
 
 def read_puzzles():
@@ -250,7 +255,19 @@ def main():
         a_star_search(input_state, goal_state, False)
         print()
     """
-
+    
+    """# Test IDS
+    input_file = read_puzzles()
+    node_puzzles = []
+    for d in input_file:
+        node_puzzles.append(Node(tuple(d), None))
+    for i in node_puzzles:
+        print("this a test for the puzzle :", i.state)
+        # maxdepth = 9
+        # for j in range(maxdepth):
+        #     print(" the max depth is :", j)
+        IDS(i, goal_state)
+    """
 
 if __name__ == '__main__':
     main()
