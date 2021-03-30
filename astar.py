@@ -209,7 +209,7 @@ def read_puzzles():
         puzzles=[]
         for line in data:
             line = line.strip()
-            tuple_list = (eval(line))
+            tuple_list =list(eval(line))
             puzzles.append(tuple_list)
     return puzzles
 
