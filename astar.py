@@ -1,5 +1,6 @@
 import time
 
+
 class Node:
     def __init__(self, state, parent):
         self.state = state
@@ -21,9 +22,9 @@ def a_star_search(start, goal, is_admissible):
     start_node = Node(start, None)
     goal_node = Node(goal, None)
     open_list.append(start_node)
-
+    timer = time.time() + 60
     # Loop until the open list is empty
-    while len(open_list) > 0:
+    while len(open_list) > 0 and time.time() < timer:
         # Sort the open list to get the node with the lowest cost first
         open_list.sort()
         # Get the node with the lowest cost
@@ -60,8 +61,12 @@ def a_star_search(start, goal, is_admissible):
             if add_to_open(open_list, neighbor):
                 open_list.append(neighbor)
     # No path is found
-    print("Solution path for A*: no solution")
-    print("Search path for A*: no solution")
+    if is_admissible:
+        print("Solution path for A* (admissible): no solution")
+        print("Search path for A* (admissible): no solution")
+    else:
+        print("Solution path for A* (inadmissible): no solution")
+        print("Search path for A* (inadmissible): no solution")
     return None
 
 
@@ -144,6 +149,7 @@ def add_to_open(open_list, neighbor):
             return False
     return True
 
+
 def dfs(start, goal):
     open_list = []
     closed_list = []
@@ -151,7 +157,7 @@ def dfs(start, goal):
     open_list.append(start)
     timer = time.time() + 60
     tuple_goal = tuple(goal)
-    while len(open_list) > 0 and time.time()<timer:
+    while len(open_list) > 0 and time.time() < timer:
         test_node = open_list.pop(0)
         search.append(test_node.state)
         if test_node.state == goal:
@@ -171,61 +177,80 @@ def dfs(start, goal):
             if add_to_open(open_list, neighbor):
                 open_list.append(neighbor)
     print("no solution was found using DFS")
-   
-def IDS(start, goal,maxdepth):
-        open_list = []
-        closed_list = []
-        search = []
-        open_list.append(start)
-        test_node = start
-        timer = time.time() + 60
-        while test_node.g <= maxdepth:
-            if time.time() == timer:
-                print("no solution, time out")
-            test_node = open_list.pop(0)
-            # print("the test state :", test_node.state)
-            search.append(test_node.state)
-            if test_node.state == goal:
-                solution_path = []
-                while test_node.state != start.state:
-                    solution_path.append(test_node.state)
-                    test_node = test_node.parent
-                solution_path.append(start.state)
-                print(" the solution path for the IDS is:", solution_path[::-1])
-                print("the search path for the IDS is :", search)
-            neighbors = get_neighbors(test_node.state)
-            for state in neighbors:
-                #  print("the neighbor state :",state)
-                neighbor = Node(state, test_node)
-                if neighbor in search:
-                    continue
-                neighbor.g = test_node.g + 1
-                if add_to_open(open_list, neighbor):
-                    open_list.append(neighbor)
-        print("no solution was found using IDS")
-        
+
+
+def IDS(start, goal, maxdepth):
+    open_list = []
+    closed_list = []
+    search = []
+    open_list.append(start)
+    test_node = start
+    timer = time.time() + 60
+    while test_node.g <= maxdepth:
+        if time.time() == timer:
+            print("no solution, time out")
+        test_node = open_list.pop(0)
+        # print("the test state :", test_node.state)
+        search.append(test_node.state)
+        if test_node.state == goal:
+            solution_path = []
+            while test_node.state != start.state:
+                solution_path.append(test_node.state)
+                test_node = test_node.parent
+            solution_path.append(start.state)
+            print(" the solution path for the IDS is:", solution_path[::-1])
+            print("the search path for the IDS is :", search)
+        neighbors = get_neighbors(test_node.state)
+        for state in neighbors:
+            #  print("the neighbor state :",state)
+            neighbor = Node(state, test_node)
+            if neighbor in search:
+                continue
+            neighbor.g = test_node.g + 1
+            if add_to_open(open_list, neighbor):
+                open_list.append(neighbor)
+    print("no solution was found using IDS")
+
+
 def read_puzzles():
-   with open('puzzle_set.txt', 'r') as data:
-        puzzles=[]
+    with open('puzzle_set.txt', 'r') as data:
+        puzzles = []
         for line in data:
             line = line.strip()
-            tuple_list =list(eval(line))
+            tuple_list = list(eval(line))
             puzzles.append(tuple_list)
     return puzzles
+
 
 def main():
     goal_state = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     initial_state = ((6, 1, 2), (7, 8, 3), (5, 4, 9))
     initial_state2 = ((2, 1, 3), (4, 5, 6), (7, 8, 9))
     start = Node(initial_state, None)
-    dfs(start, goal_state)
-   
-#     input_file = read_puzzles()
-#     for input in input_file:
-#         start = Node(input, None)
-#         print(input)
-#         dfs(start, goal_state)
-        
-        
+    # dfs(start, goal_state)
+
+    # true => use admissible heuristic, if false => use inadmissible heuristic
+    a_star_search(initial_state, goal_state, True)
+    a_star_search(initial_state, goal_state, False)
+
+    # input_file = read_puzzles()
+    #     node_puzzles = []
+    #     for input in input_file:
+    #         node_puzzles.append(Node(tuple(input), None))
+    #     for i in node_puzzles:
+    #         print("this a test for the puzzle :", i.state)
+    #         dfs(i, goal_state)
+
+    """ # Test A*
+    input_file = read_puzzles()
+    for input in input_file:
+        input_state = tuple(input)
+        print("A* Test for:", input_state)
+        a_star_search(input_state, goal_state, True)
+        a_star_search(input_state, goal_state, False)
+        print()
+    """
+
+
 if __name__ == '__main__':
     main()
