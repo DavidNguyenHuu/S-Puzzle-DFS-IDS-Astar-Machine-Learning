@@ -227,7 +227,7 @@ def main():
     initial_state = ((6, 1, 2), (7, 8, 3), (5, 4, 9))
     initial_state2 = ((2, 1, 3), (4, 5, 6), (7, 8, 9))
     start = Node(initial_state, None)
-    # dfs(start, goal_state)
+    dfs(start, goal_state)
 
     # true => use admissible heuristic, if false => use inadmissible heuristic
     a_star_search(initial_state, goal_state, True)
