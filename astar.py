@@ -209,7 +209,7 @@ def read_puzzles():
         puzzles=[]
         for line in data:
             line = line.strip()
-            tuple_list = list(eval(line))
+            tuple_list = (eval(line))
             puzzles.append(tuple_list)
     return puzzles
 
@@ -220,6 +220,12 @@ def main():
     start = Node(initial_state, None)
     dfs(start, goal_state)
    
-
+#     input_file = read_puzzles()
+#     for input in input_file:
+#         start = Node(input, None)
+#         print(input)
+#         dfs(start, goal_state)
+        
+        
 if __name__ == '__main__':
     main()
