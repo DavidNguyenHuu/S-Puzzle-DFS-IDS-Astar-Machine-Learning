@@ -220,12 +220,14 @@ def main():
     start = Node(initial_state, None)
     dfs(start, goal_state)
    
-#     input_file = read_puzzles()
+# input_file = read_puzzles()
+#     node_puzzles = []
 #     for input in input_file:
-#         start = Node(input, None)
-#         print(input)
-#         dfs(start, goal_state)
-        
+#         node_puzzles.append(Node(tuple(input), None))
+#     for i in node_puzzles:
+#         print("this a test for the puzzle :", i.state)
+#         dfs(i, goal_state)
+
         
 if __name__ == '__main__':
     main()
