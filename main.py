@@ -232,13 +232,15 @@ def main():
     a_star_search(initial_state, goal_state, True)
     a_star_search(initial_state, goal_state, False)
 
-    # input_file = read_puzzles()
-    #     node_puzzles = []
-    #     for input in input_file:
-    #         node_puzzles.append(Node(tuple(input), None))
-    #     for i in node_puzzles:
-    #         print("this a test for the puzzle :", i.state)
-    #         dfs(i, goal_state)
+    """ #Test DFS
+    input_file = read_puzzles()
+        node_puzzles = []
+        for input in input_file:
+            node_puzzles.append(Node(tuple(input), None))
+        for i in node_puzzles:
+            print("this a test for the puzzle :", i.state)
+            dfs(i, goal_state)
+    """
 
     """ # Test A*
     input_file = read_puzzles()
@@ -253,13 +255,10 @@ def main():
     """# Test IDS
     input_file = read_puzzles()
     node_puzzles = []
-    for d in input_file:
-        node_puzzles.append(Node(tuple(d), None))
+    for input in input_file:
+        node_puzzles.append(Node(tuple(input), None))
     for i in node_puzzles:
         print("this a test for the puzzle :", i.state)
-        # maxdepth = 9
-        # for j in range(maxdepth):
-        #     print(" the max depth is :", j)
         IDS(i, goal_state)
     """
 
