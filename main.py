@@ -149,8 +149,8 @@ def add_to_open(open_list, neighbor):
             return False
     return True
 
-
 def dfs(start, goal):
+    solution_found = None
     open_list = []
     closed_list = []
     search = []
@@ -168,6 +168,7 @@ def dfs(start, goal):
             solution_path.append(start.state)
             print(" the solution path for the DFS is:", solution_path[::-1])
             print("the search path for the DFS is :", search)
+            solution_found = True
             break
         neighbors = get_neighbors(test_node.state)
         for state in neighbors:
@@ -176,7 +177,9 @@ def dfs(start, goal):
                 continue
             if add_to_open(open_list, neighbor):
                 open_list.append(neighbor)
-    print("no solution was found using DFS")
+
+    if solution_found is None or solution_found == False:
+        print("no solution was found using DFS")
 
 def IDS(start, goal):
     open_list = []
