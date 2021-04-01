@@ -1,7 +1,10 @@
 # Comp 472 S-Puzzle
+Comp 472 | S-Puzzle
+------------ | -------------
 
 
-The S-Puzzle for this assignment is a type of sliding-Tiles puzzle played on a n-by-n grid, with numbers
+
+The S-Puzzle is a type of sliding-Tiles puzzle played on a n-by-n grid, with numbers
 occupying the cells. In the Tile game, S-Puzzle There is no space; all n2 tiles are occupied. The game is
 played by swapping any two adjacent tiles, where adjacency is defined grid-wise (diagonal tiles are not
 adjacent) and does not wrap around. Like in the original Sliding Tiles puzzle, the goal of the S-Puzzle is to
