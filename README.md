@@ -1,4 +1,3 @@
-# Comp 472 S-Puzzle
 Comp 472 | S-Puzzle
 ------------ | -------------
 
