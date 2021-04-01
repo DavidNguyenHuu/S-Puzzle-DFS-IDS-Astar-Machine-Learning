@@ -13,6 +13,10 @@ The goal of the 3-by-3 S-Puzzle is to reach:
 
 1 | 2 | 3
 ------------ | ------------- | -------------
+4 | 5 | 6
+------------ | ------------- | -------------
+7 | 8 | 9
+------------ | ------------- | -------------
 
 
 Implemented 3 solutions for the S-Puzzle board using the following 3 search algorithms:
