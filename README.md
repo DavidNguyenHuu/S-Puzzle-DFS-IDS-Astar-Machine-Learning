@@ -1,4 +1,4 @@
-# comp472_a2
+# Comp 472 S-Puzzle
 
 
 The S-Puzzle for this assignment is a type of sliding-Tiles puzzle played on a n-by-n grid, with numbers
