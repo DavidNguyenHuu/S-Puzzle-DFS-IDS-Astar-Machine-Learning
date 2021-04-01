@@ -11,8 +11,8 @@ arrange the numbers in ascending order.
 
 The goal of the 3-by-3 S-Puzzle is to reach: 
 
-1 | 2 | 3
-- | -|-
+1 | 2
+------------ | -------------
 
 
 Implemented 3 solutions for the S-Puzzle board using the following 3 search algorithms:
