@@ -1,6 +1,4 @@
-Comp 472 | S-Puzzle
------------- | -------------
-
+ S-Puzzle
 
 
 The S-Puzzle is a type of sliding-Tiles puzzle played on a n-by-n grid, with numbers
